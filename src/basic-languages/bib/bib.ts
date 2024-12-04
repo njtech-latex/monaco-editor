@@ -35,15 +35,8 @@ export const language = <languages.IMonarchLanguage>{
 			// Bib entry types like @article, @book, @inproceedings
 			[/@[a-zA-Z]+/, 'keyword'],
 
-			// Bib citation key like @article{cite:key-2021, only cite:key-2021 part
-			[/[a-zA-Z0-9\-\:]+(?=\s*,)/, 'type.identifier'],
-
 			// Match field names like title, author, booktitle
-			[/[a-zA-Z]+(?=\s*=\s*)/, 'variable'],
-
-			// Match anything after the = sign, wrapped by quotes or curly brackets
-			[/".*?"/, 'string'],
-			[/[^=,{}"]+/, 'string']
+			[/[a-zA-Z]+(?=\s*=\s*)/, 'key']
 		]
 	}
 };
