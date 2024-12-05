@@ -60,10 +60,22 @@ function createSimpleServer(rootDir: string, port: number) {
 		})
 		.then((staticServer) => {
 			const server = http.createServer((request, response) => {
+				// Allow CORS
+				response.setHeader('Access-Control-Allow-Origin', '*');
+				response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+				response.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+				if (request.method === 'OPTIONS') {
+					response.writeHead(204);
+					response.end();
+					return;
+				}
+
 				return staticServer.handle(request, response);
 			});
-			server.listen(port, '127.0.0.1', () => {
-				console.log(`Running at http://127.0.0.1:${port}`);
+
+			server.listen(port, 'localhost', () => {
+				console.log(`Running at http://localhost:${port}`);
 			});
 		});
 }

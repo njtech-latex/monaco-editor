@@ -2,7 +2,7 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import type { languages } from '../../fillers/monaco-editor-core';
+import { languages } from '../../fillers/monaco-editor-core';
 
 // .bib file is a bibliography file
 export const conf: languages.LanguageConfiguration = {
@@ -14,6 +14,18 @@ export const conf: languages.LanguageConfiguration = {
 	surroundingPairs: [
 		{ open: '{', close: '}' },
 		{ open: '"', close: '"' }
+	],
+	folding: {
+		markers: {
+			start: new RegExp('^\\s*@[a-zA-Z]+\\s*\\{'),
+			end: new RegExp('^\\s*\\}')
+		}
+	},
+	onEnterRules: [
+		{
+			beforeText: new RegExp('^\\s*@[a-zA-Z]+\\s*\\{'),
+			action: { indentAction: languages.IndentAction.IndentOutdent }
+		}
 	]
 };
 
@@ -36,7 +48,13 @@ export const language = <languages.IMonarchLanguage>{
 			[/@[a-zA-Z]+/, 'keyword'],
 
 			// Match field names like title, author, booktitle
-			[/[a-zA-Z]+(?=\s*=\s*)/, 'key']
+			[/[a-zA-Z]+(?=\s*=\s*)/, 'variable'],
+
+			// Match string
+			[/".*"/, 'string'],
+
+			// Match latex commands
+			[/\\[a-zA-Z]+/, 'keyword']
 		]
 	}
 };

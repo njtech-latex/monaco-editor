@@ -1,0 +1,17 @@
+@article{smith1998neural,
+  title = {Neural networks for pattern recognition},
+  author = {Smith, John and Doe, Jane},
+  journal = {Journal of Artificial Intelligence Research},
+  volume = {10},
+  number = {1},
+  pages = {241--259},
+  year = {1998}
+}
+
+@misc{website:latex-tutorial,
+  author = "Thomas, Adrian",
+  title = "Introduction to LaTeX Writing",
+  year = "2020",
+  howpublished = "\url{https://docs.keepresearch.com}",
+  note = "Accessed: 2023-05-10"
+}
