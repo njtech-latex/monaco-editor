@@ -33,9 +33,6 @@ export const language = <languages.IMonarchLanguage>{
 	ignoreCase: true,
 	tokenPostfix: '.bib',
 
-	// Custom rules
-	brackets: [{ open: '{', close: '}', token: 'delimiter.curly' }],
-
 	// The main tokenizer for our languages
 	tokenizer: {
 		root: [

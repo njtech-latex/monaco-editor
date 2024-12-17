@@ -24,6 +24,18 @@ export const conf: languages.LanguageConfiguration = {
 		{ open: '[', close: ']' },
 		{ open: '(', close: ')' },
 		{ open: '"', close: '"' }
+	],
+	folding: {
+		markers: {
+			start: new RegExp('\\\\begin\\b'),
+			end: new RegExp('\\\\end\\b')
+		}
+	},
+	onEnterRules: [
+		{
+			beforeText: new RegExp('\\\\begin\\b'),
+			action: { indentAction: languages.IndentAction.Indent }
+		}
 	]
 };
 
@@ -34,8 +46,39 @@ export const language = <languages.IMonarchLanguage>{
 	// The main tokenizer for our languages
 	tokenizer: {
 		root: [
-			[/(%.*)/, 'comment'], // comments
-			[/\\[a-zA-Z]+/, 'keyword'] // other commands
+			// commands
+			[
+				'(\\\\begin)(\\s*)(\\{)([\\w\\-\\*\\@]+)(\\})',
+				[
+					'keyword.predefined',
+					'white',
+					'@brackets',
+					{ token: 'tag.env-$4', bracket: '@open' },
+					'@brackets'
+				]
+			],
+			[
+				'(\\\\end)(\\s*)(\\{)([\\w\\-\\*\\@]+)(\\})',
+				[
+					'keyword.predefined',
+					'white',
+					'@brackets',
+					{ token: 'tag.env-$4', bracket: '@close' },
+					'@brackets'
+				]
+			],
+
+			// commands
+			['\\\\[^a-zA-Z@]', 'keyword'],
+			['\\@[a-zA-Z@]+', 'keyword.at'],
+			['\\\\([a-zA-Z@]+)', 'keyword'],
+
+			// whitespace and others
+			['%.*$', 'comment'],
+			['[ \\t\\r\\n]+', 'white'],
+			['[{}()\\[\\]]', '@brackets'],
+			['#+\\d', 'number.arg'],
+			['\\-?(?:\\d+(?:\\.\\d+)?|\\.\\d+)\\s*(?:em|ex|pt|pc|sp|cm|mm|in)', 'number.len']
 		]
 	}
 };
