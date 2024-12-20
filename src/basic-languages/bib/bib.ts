@@ -23,8 +23,9 @@ export const conf: languages.LanguageConfiguration = {
 	},
 	onEnterRules: [
 		{
-			beforeText: new RegExp('^\\s*@[a-zA-Z]+\\s*\\{'),
-			action: { indentAction: languages.IndentAction.IndentOutdent }
+			beforeText: new RegExp('^\\s*@[a-zA-Z]+\\s*\\{\\s*[^\\s}]+'),
+			afterText: new RegExp('^[^}\\]\\)]*$'),
+			action: { indentAction: languages.IndentAction.Indent }
 		}
 	]
 };

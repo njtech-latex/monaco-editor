@@ -37,11 +37,7 @@ export const conf: languages.LanguageConfiguration = {
 		// Indent after \begin \if \else \elif \for \while \repeat
 		{
 			beforeText: new RegExp('\\\\(begin|if|else|elif|for|while|repeat)\\b.*$', 'i'),
-			action: { indentAction: languages.IndentAction.Indent }
-		},
-		// Indent after =, [, {, or (
-		{
-			beforeText: new RegExp('.*[=\\[\\{\\(]\\s*$'),
+			afterText: new RegExp('^[^}\\]\\)]*$'),
 			action: { indentAction: languages.IndentAction.Indent }
 		}
 	]
